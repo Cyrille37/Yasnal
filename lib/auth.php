@@ -75,6 +75,18 @@ function auth(&$response)
 			}
 			break;
 
+		case 'google':
+			if( \Yasnal\AuthEngine::signCheck($signature, $email) )
+			{
+				$response['status'] = 'ok';
+				$response['message'] = 'Ok';
+			}
+			else
+			{
+				$response['message'] = 'Auth signature mismatch';
+			}
+			break;
+
 		default:
 			$response['message'] = 'Unknow auth provider';
 	}
@@ -83,22 +95,6 @@ function auth(&$response)
 
 	if( $response['status']!='error')
 	{
-		/*if( empty( \Yasnal\AuthEngine::$config['authCallbackPhpFile'] ) )
-		{
-			$response['status']='error';
-			$response['message']='Config error, auth callback file not defined';
-		}
-		else if( ! file_exists(\Yasnal\AuthEngine::$config['authCallbackPhpFile']) )
-		{
-			$response['status']='error';
-			$response['message']='Config error, auth callback file not found';
-		}
-		require_once( \Yasnal\AuthEngine::$config['authCallbackPhpFile'] );
-		if( ! is_callable(\Yasnal\AuthEngine::AUTH_CALLBACK) )
-		{
-			$response['status']='error';
-			$response['message']='Config error, missing auth callback function';
-		}*/
 
 		$loaded = \Yasnal\AuthEngine::loadCallback('auth', \Yasnal\AuthEngine::$config['authCallbackPhpFile'],\Yasnal\AuthEngine::AUTH_CALLBACK);
 		if( $loaded !== true )
