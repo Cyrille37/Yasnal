@@ -1,12 +1,13 @@
 <!DOCTYPE html>
 <html>
 <?php
+
+error_reporting(-1);
+
 define( 'YASNAL_PATH',  __DIR__.'/../lib' );
 define( 'YASNAL_URI',  dirname($_SERVER['PHP_SELF']).'/../lib' );
 
 require_once( YASNAL_PATH.'/Yasnal.php');
-
-\Yasnal\AuthEngine::$mailerCallbackPhpFile = __DIR__.'/mailerDemoCallback.php';
 
 ?>
     <head>

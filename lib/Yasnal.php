@@ -9,12 +9,12 @@ class AuthEngine {
 
 	const YASNAL_CSRF = 'YASNAL_CSRF' ;
 
-	public static $auth_secret = '60ba16391e61446b714b9005f78a92d5' ;
-	public static $mailerCallbackPhpFile ;
-
-	public function __constructor()
-	{
-	}
+	/**
+	 * Default value assigned at the end of file.
+	 * TODO: manage this settings to permit its easy overloading.
+	 * @var string
+	 */
+	public static $config = array();
 
 	public static function sendSpecialHttpHeaders()
 	{
@@ -25,10 +25,10 @@ class AuthEngine {
 		@header('Access-Control-Allow-Origin: *' );
 		@header('Access-Control-Allow-Credentials: true' );
 		$headers = array(
-			'Expires' => 'Wed, 11 Jan 1984 05:00:00 GMT',
-			'Cache-Control' => 'no-cache, must-revalidate, max-age=0',
-			'Pragma' => 'no-cache',
-			'Last-Modified' => ''
+				'Expires' => 'Wed, 11 Jan 1984 05:00:00 GMT',
+				'Cache-Control' => 'no-cache, must-revalidate, max-age=0',
+				'Pragma' => 'no-cache',
+				'Last-Modified' => ''
 		);
 		foreach( $headers as $name => $field_value )
 			@header("{$name}: {$field_value}");
@@ -54,7 +54,22 @@ class AuthEngine {
 			return false ;
 		return true ;
 	}
-	
+
+	public static function sign($data)
+	{
+		if( is_array($data))
+			$data = implode('',$data);
+		return hash('SHA256', self::$config['auth_secret'] . $data) ;
+	}
+	public static function signCheck($sign, $data)
+	{
+		if( is_array($data))
+			$data = implode('',$data);
+		if( $sign == hash('SHA256', self::$config['auth_secret'] . $data) )
+			return true ;
+		return false ;
+	}
+
 	protected static function session_start()
 	{
 		if (!isset($_SESSION))
@@ -62,18 +77,13 @@ class AuthEngine {
 		if (isset($_SESSION))
 			return true ;
 		return false ;
-		/*
-		// PHP >= 5.4.0
-		switch( session_status() )
-		{
-		case PHP_SESSION_DISABLED:
-			break;
-		case PHP_SESSION_NONE:
-			break;
-		case PHP_SESSION_ACTIVE:
-			break;
-		}
-		*/
+
+		/* PHP >= 5.4.0
+		 switch( session_status() ){
+		case PHP_SESSION_DISABLED: break;
+		case PHP_SESSION_NONE: break;
+		case PHP_SESSION_ACTIVE: break;
+		}*/
 	}
 
 	public static function isValidEMail($email)
@@ -108,9 +118,22 @@ class AuthEngine {
 				return false ;
 			// invalid characters
 			if ( !preg_match('/^[a-z0-9-]+$/i', $sub ) )
-			return false ;
+				return false ;
 		}
 		return true ;
 	}
 
 }
+
+AuthEngine::$config['auth_secret'] = '60ba16391e61446b714b9005f78a92d5' ;
+/**
+ * Default value assigned at the end of file.
+ * TODO: manage this settings to permit its easy overloading.
+ * @var string
+ */
+AuthEngine::$config['mailerCallbackPhpFile'] = __DIR__.'/email/defaultMailerCallback.php' ;
+AuthEngine::$config['mailerFrom'] = 'From: Yasnal Auth Email <root@oueb.org>' ;
+AuthEngine::$config['mailerSubject'] = 'Yasnal checking your authentification' ;
+AuthEngine::$config['mailerBody'] = '<p>Here is your PIN code: {PINCODE}</p>' ;
+
+//AuthEngine::$config[''] = '' ;
