@@ -93,3 +93,7 @@ input, button, select {
 	display: inline;  
 	list-style: none;
 }
+#auth-error {
+	background-color: red ;
+	color: black;
+}

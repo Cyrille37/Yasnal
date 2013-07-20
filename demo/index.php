@@ -1,8 +1,11 @@
 <!DOCTYPE html>
 <html>
 <?php
-//define( 'YASNAL_PATH',  __DIR__.'/../lib' );
+define( 'YASNAL_PATH',  __DIR__.'/../lib' );
 define( 'YASNAL_URI',  dirname($_SERVER['PHP_SELF']).'/../lib' );
+
+require_once( YASNAL_PATH.'/Yasnal.php');
+
 ?>
     <head>
         <meta charset="UTF-8" />
@@ -25,13 +28,14 @@ define( 'YASNAL_URI',  dirname($_SERVER['PHP_SELF']).'/../lib' );
 
 		<div id="auth-form">
 			<form title="Social Network Authentification">
+				<input type="hidden" name="auth-csrf" value="<?php echo \Yasnal\AuthEngine::CsrfGet() ?>" />
 				<div>
 					<h2>Identification</h2>
 					<p>Indentiez vous avec le service de votre choix:</p>
 				</div>
 				<ul class="services">
-					<li><a href="javascript:void(0);" title="identifiez vous avec Google+" class="auth-google-button"><img alt="Google" src="<?php echo YASNAL_URI,'/img/google_32.png' ?>" /></a></li>
-					<li><a href="javascript:void(0);" title="identifiez vous avec un email" class="auth-email-button"><img alt="eMail" src="<?php echo YASNAL_URI,'/img/email_32.jpg' ?>" /></a></li>
+					<li><a href="" title="identifiez vous avec Google+" class="auth-google-button"><img alt="Google" src="<?php echo YASNAL_URI,'/img/google_32.png' ?>" /></a></li>
+					<li><a href="" title="identifiez vous avec un email" class="auth-email-button"><img alt="eMail" src="<?php echo YASNAL_URI,'/img/email_32.jpg' ?>" /></a></li>
 				</ul>
 			</form>
 		</div>
@@ -40,9 +44,8 @@ define( 'YASNAL_URI',  dirname($_SERVER['PHP_SELF']).'/../lib' );
 				<p>Merci d'indiquer votre adresse email à laquelle nous allons vous expédier un code pour vous identifier:</p>
 				<p>
 					Votre adresse email: <input type="text" name="auth-email" size="30" />
-					<div class="auth-email-error">error message goes here</div>
 					<input type="button" value="Envoyer le code" class="auth-email-send" />
-					<input type="button" value="Annuler" class="auth-email-sendCancel" />
+					<input type="button" value="Annuler" class="auth-email-cancel" />
 				</p>
 			</form>
 		</div>
@@ -51,10 +54,13 @@ define( 'YASNAL_URI',  dirname($_SERVER['PHP_SELF']).'/../lib' );
 				<p>Indiquer le code que vous avez reçu à l'adresse email <span id="auth-email"></span></p>
 				<p>
 					Le code: <input type="text" name="auth-emailCode" size="10" />
-					<input type="button" value="Valider" />
-					<input type="button" value="Annuler" />
+					<input type="button" value="Valider" class="auth-emailCode-confirm" />
+					<input type="button" value="Annuler" class="auth-email-cancel" />
 				</p>
 			</form>
+		</div>
+		<div id="auth-error">
+			<div class="message">error message goes here</div>
 		</div>
 
     </body>
