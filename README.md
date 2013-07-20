@@ -11,7 +11,7 @@ NOTICE: The library is not yet operational  :ECITON
 </pre>
 
 Authentification services:
-* email: coding...
+* email: ok
 * google: todo
 * facebook: todo
 * twitter: todo
