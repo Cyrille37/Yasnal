@@ -1,4 +1,8 @@
 <?php
+/**
+ * 
+ * @author cyrille
+ */
 
 namespace Yasnal\Email ;
 
@@ -8,6 +12,10 @@ require_once( __DIR__.'/../Yasnal.php');
 
 echo AuthEmail::run();
 
+/**
+ * 
+ * @author cyrille
+ */
 class AuthEmail {
 
 	const MAILER_CALLBACK = 'yasnal_mailerCallback';
@@ -30,6 +38,7 @@ class AuthEmail {
 				$response['message']='CSRF check failed';
 				break;
 		}
+
 		return json_encode($response);
 	}
 
