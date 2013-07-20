@@ -9,6 +9,9 @@ class AuthEngine {
 
 	const YASNAL_CSRF = 'YASNAL_CSRF' ;
 
+	public static $auth_secret = '60ba16391e61446b714b9005f78a92d5' ;
+	public static $mailerCallbackPhpFile ;
+
 	public function __constructor()
 	{
 	}
@@ -72,4 +75,42 @@ class AuthEngine {
 		}
 		*/
 	}
+
+	public static function isValidEMail($email)
+	{
+		// Minimum length the email can be
+		if ( strlen( $email ) < 3 )
+			return false ;
+		// An @ character after the first position
+		if ( strpos( $email, '@', 1 ) === false )
+			return false ;
+		// Split out the local and domain parts
+		list( $local, $domain ) = explode( '@', $email, 2 );
+
+		// LOCAL PART
+		// Test for invalid characters
+		if ( !preg_match( '/^[a-zA-Z0-9!#$%&\'*+\/=?^_`{|}~\.-]+$/', $local ) )
+			return false ;
+
+		// DOMAIN PART
+		// leading and trailing periods and whitespace
+		if ( trim( $domain, " \t\n\r\0\x0B." ) !== $domain )
+			return false ;
+		// Split the domain into subs
+		$subs = explode( '.', $domain );
+		// Assume the domain will have at least two subs
+		if ( 2 > count( $subs ) )
+			return false ;
+		// Loop through each sub
+		foreach ( $subs as $sub ) {
+			// leading and trailing hyphens and whitespace
+			if ( trim( $sub, " \t\n\r\0\x0B-" ) !== $sub )
+				return false ;
+			// invalid characters
+			if ( !preg_match('/^[a-z0-9-]+$/i', $sub ) )
+			return false ;
+		}
+		return true ;
+	}
+
 }
