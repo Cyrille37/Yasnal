@@ -19,3 +19,8 @@ Authentification services:
 * openid: todo
 * wordpress: todo
 * liveid: todo
+
+Other TODOs:
+* Write the doc Doc !
+* An example with http://swiftmailer.org
+* 
