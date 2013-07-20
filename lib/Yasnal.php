@@ -5,11 +5,16 @@
 
 namespace Yasnal ;
 
-error_log( basename($_SERVER['PHP_SELF']).' '.var_export($_REQUEST,true));
+//error_log( basename($_SERVER['PHP_SELF']).' '.var_export($_REQUEST,true));
 
 class AuthEngine {
 
 	const YASNAL_CSRF = 'YASNAL_CSRF' ;
+	const AUTH_COOKIE = 'Yasnal' ;
+	
+	const AUTH_CALLBACK = 'yasnal_authCallback';
+	const GETAUTH_CALLBACK = 'yasnal_getAuthCallback';
+	const UNAUTH_CALLBACK = 'yasnal_unAuthCallback';
 
 	/**
 	 * Default value assigned at the end of file.
@@ -88,6 +93,27 @@ class AuthEngine {
 		}*/
 	}
 
+	public static function loadCallback( $name, $file, $function )
+	{
+		$err = null ;
+		if( empty($file) )
+		{
+			$err=$name.' callback file not defined';
+		}
+		else if( ! file_exists($file) )
+		{
+			$err=$name.' callback file not found';
+		}
+		require_once( $file );
+		if( ! is_callable($function) )
+		{
+			$err= $name.' callback function not found';
+		}
+		if( $err != null )
+			return $err ;
+		return true ;
+	}
+
 	public static function isValidEMail($email)
 	{
 		// Minimum length the email can be
@@ -127,12 +153,13 @@ class AuthEngine {
 
 }
 
-AuthEngine::$config['auth_secret'] = '60ba16391e61446b714b9005f78a92d5' ;
+AuthEngine::$config['auth_secret'] = '6"0[b&16=/91e6*44£bç14b%µ05§|@8a92d5' ;
 /**
  * Default value assigned at the end of file.
  * TODO: manage this settings to permit its easy overloading.
  * @var string
  */
+AuthEngine::$config['authCallbackPhpFile'] = __DIR__.'/defaultAuthCallback.php' ;
 AuthEngine::$config['mailerCallbackPhpFile'] = __DIR__.'/email/defaultMailerCallback.php' ;
 AuthEngine::$config['mailerFrom'] = 'From: Yasnal Auth Email <root@oueb.org>' ;
 AuthEngine::$config['mailerSubject'] = 'Yasnal checking your authentification' ;

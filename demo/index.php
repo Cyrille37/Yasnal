@@ -75,5 +75,6 @@ require_once( YASNAL_PATH.'/Yasnal.php');
 			<div class="message">error message goes here</div>
 		</div>
 
+		
     </body>
 </html>
