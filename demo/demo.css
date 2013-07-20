@@ -97,3 +97,13 @@ input, button, select {
 	background-color: red ;
 	color: black;
 }
+#demo-auth{
+	font-weight: bold;
+}
+#demo-auth-form {
+	border: solid medium #dddddd ;
+	margin-top: 1em;
+	padding: 0 .5em .5em 1em;
+	width: 50%;
+
+}
