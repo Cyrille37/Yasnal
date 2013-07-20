@@ -19,7 +19,7 @@ class AuthEmail {
 		\Yasnal\AuthEngine::sendSpecialHttpHeaders();
 
 		$csrf = isset($_REQUEST['csrf']) ? $_REQUEST['csrf'] : null ;
-		if( ! \Yasnal\AuthEngine::CsrfGet($csrf) )
+		if( ! \Yasnal\AuthEngine::CsrfCheck($csrf) )
 		{
 			$response['status']='error';
 			$response['message']='CSRF check failed';

@@ -36,24 +36,19 @@ class AuthEngine {
 		// Do not check CSRF if no session available
 		if( ! self::session_start() )
 			return '' ;
-		if( ! isset($_SESSION[self::YASNAL_CSRF]) )
-			$_SESSION[self::YASNAL_CSRF] = rand(1,9999).time().rand(1,9999);
-		return md5($_SESSION[self::YASNAL_CSRF]);
+		$csrf = rand(1,9999).time().rand(1,9999) ;
+		$_SESSION[self::YASNAL_CSRF] = $csrf ;
+		return md5($csrf);
 	}
 	public static function CsrfCheck($token)
 	{
 		// Do not check CSRF if no session available
 		if( ! self::session_start() )
 			return true ;
-		
 		if( ! isset($_SESSION[self::YASNAL_CSRF]) )
-		{
 			return false ;
-		}
 		else if( $token != md5($_SESSION[self::YASNAL_CSRF]) )
-		{
 			return false ;
-		}
 		return true ;
 	}
 	
