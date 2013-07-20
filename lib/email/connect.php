@@ -6,8 +6,6 @@ error_reporting(-1);
 
 require_once( __DIR__.'/../Yasnal.php');
 
-error_log( var_export($_REQUEST,true));
-
 echo AuthEmail::run();
 
 class AuthEmail {

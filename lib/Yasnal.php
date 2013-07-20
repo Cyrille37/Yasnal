@@ -5,6 +5,8 @@
 
 namespace Yasnal ;
 
+error_log( basename($_SERVER['PHP_SELF']).' '.var_export($_REQUEST,true));
+
 class AuthEngine {
 
 	const YASNAL_CSRF = 'YASNAL_CSRF' ;
@@ -136,4 +138,3 @@ AuthEngine::$config['mailerFrom'] = 'From: Yasnal Auth Email <root@oueb.org>' ;
 AuthEngine::$config['mailerSubject'] = 'Yasnal checking your authentification' ;
 AuthEngine::$config['mailerBody'] = '<p>Here is your PIN code: {PINCODE}</p>' ;
 
-//AuthEngine::$config[''] = '' ;

@@ -22,7 +22,16 @@ require_once( YASNAL_PATH.'/Yasnal.php');
 		<script src="jquery.min.js" ></script>
 		<script src="<?php echo YASNAL_URI,'/Yasnal.js' ?>" ></script>
 		<script>
-			Yasnal.config.lib_uri = '<?php echo YASNAL_URI ?>' ;
+		Yasnal.config.lib_uri = '<?php echo YASNAL_URI ?>' ;
+		Yasnal.config.auth_success_callback = auth_success ;
+		jQuery(document).ready( function($) {
+			    Yasnal.initForms($);
+			});
+
+		function auth_success()
+		{
+			alert('Yep, you are authenticated');
+		}
 		</script>
 		<script src="demo.js" ></script>
    </head>
@@ -58,7 +67,7 @@ require_once( YASNAL_PATH.'/Yasnal.php');
 				<p>
 					Le code: <input type="text" name="auth-emailCode" size="10" />
 					<input type="button" value="Valider" class="auth-emailCode-confirm" />
-					<input type="button" value="Annuler" class="auth-email-cancel" />
+					<input type="button" value="Annuler" class="auth-emailCode-cancel" />
 				</p>
 			</form>
 		</div>
