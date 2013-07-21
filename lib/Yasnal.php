@@ -5,13 +5,13 @@
 
 namespace Yasnal ;
 
-//error_log( basename($_SERVER['PHP_SELF']).' '.var_export($_REQUEST,true));
+error_log( basename($_SERVER['PHP_SELF']).' '.var_export($_REQUEST,true));
 
 class AuthEngine {
 
 	const YASNAL_CSRF = 'YASNAL_CSRF' ;
 	const AUTH_COOKIE = 'Yasnal' ;
-	
+
 	const AUTH_CALLBACK = 'yasnal_authCallback';
 	const GETAUTH_CALLBACK = 'yasnal_getAuthCallback';
 	const UNAUTH_CALLBACK = 'yasnal_unAuthCallback';
@@ -32,10 +32,10 @@ class AuthEngine {
 		@header('Access-Control-Allow-Origin: *' );
 		@header('Access-Control-Allow-Credentials: true' );
 		$headers = array(
-				'Expires' => 'Wed, 11 Jan 1984 05:00:00 GMT',
-				'Cache-Control' => 'no-cache, must-revalidate, max-age=0',
-				'Pragma' => 'no-cache',
-				'Last-Modified' => ''
+			'Expires' => 'Wed, 11 Jan 1984 05:00:00 GMT',
+			'Cache-Control' => 'no-cache, must-revalidate, max-age=0',
+			'Pragma' => 'no-cache',
+			'Last-Modified' => ''
 		);
 		foreach( $headers as $name => $field_value )
 			@header("{$name}: {$field_value}");
@@ -151,6 +151,17 @@ class AuthEngine {
 		return true ;
 	}
 
+	public static function getCurrentUrl($withRequestUri=true)
+	{
+		return
+		(isset($_SERVER['HTTPS'])?'https://':'http://')
+		. $_SERVER['SERVER_NAME']
+		.((!isset($_SERVER['HTTPS']) && $_SERVER['SERVER_PORT']!=80)
+			|| (isset($_SERVER['HTTPS']) && $_SERVER['SERVER_PORT']!=443)
+			?':'.$_SERVER['SERVER_PORT']
+			:'')
+			.( $withRequestUri ? $_SERVER['REQUEST_URI'] : '' );
+	}
 }
 
 AuthEngine::$config['auth_secret'] = '6"0[b&16=/91e6*44£bç14b%µ05§|@8a92d5' ;
@@ -164,4 +175,7 @@ AuthEngine::$config['mailerCallbackPhpFile'] = __DIR__.'/email/defaultMailerCall
 AuthEngine::$config['mailerFrom'] = 'From: Yasnal Auth Email <root@oueb.org>' ;
 AuthEngine::$config['mailerSubject'] = 'Yasnal checking your authentification' ;
 AuthEngine::$config['mailerBody'] = '<p>Here is your PIN code: {PINCODE}</p>' ;
+AuthEngine::$config['facebook_clientid'] = '566173500095577' ;
+AuthEngine::$config['facebook_secretkey'] = '5268de287280a7cdc40c5697c786176d' ;
+
 

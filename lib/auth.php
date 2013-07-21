@@ -87,6 +87,18 @@ function auth(&$response)
 			}
 			break;
 
+		case 'facebook':
+			if( \Yasnal\AuthEngine::signCheck($signature, $email) )
+			{
+				$response['status'] = 'ok';
+				$response['message'] = 'Ok';
+			}
+			else
+			{
+				$response['message'] = 'Auth signature mismatch';
+			}
+			break;
+			
 		default:
 			$response['message'] = 'Unknow auth provider';
 	}

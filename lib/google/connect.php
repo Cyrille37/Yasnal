@@ -45,7 +45,8 @@ class AuthGoogle {
 		$email = $attributes['contact/email'];
 		//$first_name = isset($attributes['namePerson/first']) ? $attributes['namePerson/first'] : '';
 		//$last_name = isset($attributes['namePerson/last']) ? $attributes['namePerson/last'] : '';
-		$signature = $signature = \Yasnal\AuthEngine::sign($email);
+
+		$signature = \Yasnal\AuthEngine::sign($email);
 		?>
 <html>
 <head>
