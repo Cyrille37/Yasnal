@@ -19,9 +19,6 @@ class AuthFacebook {
 
 	public static function run()
 	{
-		error_log( 'PHP_SELF: '.$_SERVER['PHP_SELF'] );
-		error_log( 'REQUEST_URI: '.$_SERVER['REQUEST_URI'] );
-
 		if( isset($_GET['code']) || isset($_GET['error']) )
 		{
 			self::backFromFacebook();
@@ -65,7 +62,7 @@ exit();
 			.	'&code=' . urlencode($_GET['code']) ;
 
 		$res = file_get_contents( $url );
-		error_log( 'RES: '.var_export( $res,true ));
+		//error_log( 'RES: '.var_export( $res,true ));
 
 		$res = explode( '=', $res );
 		if( count($res)<2 || $res[0] != 'access_token')
@@ -74,8 +71,9 @@ exit();
 			exit();
 		}
 		$access_token = $res[1];
-		
+
 		$fb_json = json_decode( file_get_contents('https://graph.facebook.com/me?access_token=' . $access_token ));
+		//error_log( 'RES: '.var_export( $fb_json,true ));
 		$email = $fb_json->{'email'};
 		//['first_name'] = $fb_json->{'first_name'};
 		//['last_name'] = $fb_json->{'last_name'};

@@ -5,7 +5,7 @@
 
 namespace Yasnal ;
 
-error_log( basename($_SERVER['PHP_SELF']).' '.var_export($_REQUEST,true));
+//error_log( basename($_SERVER['PHP_SELF']).' '.var_export($_REQUEST,true));
 
 class AuthEngine {
 
