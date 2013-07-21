@@ -22,60 +22,7 @@ require_once( YASNAL_PATH.'/Yasnal.php');
 <link rel="stylesheet" type="text/css" media="all" href="demo.css" />
 <script src="jquery.min.js"></script>
 <script src="<?php echo YASNAL_URI,'/Yasnal.js' ?>"></script>
-<script>
-	Yasnal.config.lib_uri = '<?php echo YASNAL_URI ?>' ;
-	Yasnal.config.auth_success_callback = auth_success ;
-	jQuery(document).ready( function($) {
-		    Yasnal.initForms($);
-		});
-
-	function auth_success()
-	{
-		alert('Yep, you are authenticated');
-		update_auth();
-	}
-	function update_auth()
-	{
-		jQuery.post(Yasnal.config.lib_uri + Yasnal.config.auth_url, {action : 'getAuth'},
-			function(jsonString) {
-				var res = JSON.parse(jsonString);
-				if (res.status == 'ok') {
-				    jQuery('#demo-auth').text(res.auth);
-				} else {
-					if (res.status == 'error') {
-						Yasnal.displayError(res.message);
-				  } else {
-						var s = '';
-						for (prop in res) {
-							s += prop + '=' + res[prop] + "\n";
-						}
-						alert('unknow result. Got: ' + "\n" + s);
-					}
-				}
-		});
-	}
-	function logout()
-	{
-		jQuery.post(Yasnal.config.lib_uri + Yasnal.config.auth_url, {action : 'unAuth'},
-			function(jsonString) {
-				var res = JSON.parse(jsonString);
-				if (res.status == 'ok') {
-				    jQuery('#demo-auth').text(null);
-				} else {
-					if (res.status == 'error') {
-						Yasnal.displayError(res.message);
-				  } else {
-						var s = '';
-						for (prop in res) {
-							s += prop + '=' + res[prop] + "\n";
-						}
-						alert('unknow result. Got: ' + "\n" + s);
-					}
-				}
-		});
-		update_auth();
-	}
-</script>
+<script src="demo.js"></script>
 
 </head>
 <body>
@@ -134,5 +81,9 @@ require_once( YASNAL_PATH.'/Yasnal.php');
 			<div class="message">error message goes here</div>
 		</div>
 	</div>
+	
+	<ul>
+	<li><a href="facebook.php">page Facebook</a></li>
+	</ul>
 </body>
 </html>

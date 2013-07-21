@@ -12,7 +12,7 @@ NOTICE: The library is not yet operational  :ECITON
 
 Authentification services:
 * email: ok
-* google: todo
+* google: ok
 * facebook: todo
 * twitter: todo
 * yahoo: todo
