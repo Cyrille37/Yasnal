@@ -1,17 +1,14 @@
 /**
  * All this code is for the demo, to show the use of Yasnal API.
  */
-
 // Configuration
-
-Yasnal.config.lib_uri = '<?php echo YASNAL_URI ?>';
-Yasnal.config.auth_success_callback = auth_success;
 
 jQuery(document).ready(function($) {
 
     // Connect social netword buttons
 
     Yasnal.initForms($);
+    update_auth();
 });
 
 /**
